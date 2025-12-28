@@ -5,7 +5,16 @@ const express = require('express');
 const router = express.Router();
 
 router.post('/', async (req, res) => {
-    res.json(req.body);
+    try
+    {
+        const pet = await Pet.create(req.body);
+
+        res.status(201).json({pet});
+    }
+    catch(error)
+    {
+        res.status(500).json({error: 'failed to create pet'});
+    }
 });
 
 module.exports = router;
